@@ -1,8 +1,8 @@
-# IoT-vulhub
+# IoT-vulhub-2024
 
-受 [Vulhub](https://github.com/vulhub/vulhub) 项目的启发，希望做一个 IoT 版的固件漏洞复现环境。
+该项目源头是Vu1nT0tal/IoT-vulhub的项目，但是我是从xuanxuan那个fork仓库fork过来的。做这个项目是在本地复现的时候遇到一些bug，想重新优化文档让用户可以更快的上手，而且他们也很久没有维护更新了，打算添加一些新的CVE漏洞。
 
-## 安装
+## 基础环境安装
 
 在 ubuntu16.04 下安装 docker/docker-compose：
 
@@ -22,8 +22,6 @@ pip install docker-compose
 
 ## 使用说明
 
-**在构建 qemu-system 前务必下载对应的 qemu 镜像！**
-
 ```sh
 # 下载项目
 wget https://github.com/firmianay/IoT-vulhub/archive/master.zip -O iot-vulhub-master.zip
@@ -38,18 +36,7 @@ docker pull firmianay/binwalk       # 或者拉取
 # 进入某一个漏洞/环境的目录
 cd Vivotek/remote_stack_overflow
 
-# 解包固件
-docker run -v $PWD/firmware:/root/firmware binwalk -Mer /root/firmware/firmware.bin
-
-# 自动化编译环境（目前通常有三种模拟方式）
-docker-compose -f docker-compose-user.yml build     # QEMU 用户模式模拟
-docker-compose -f docker-compose-system.yml build   # QEMU 系统模式模拟
-docker-compose -f docker-compose-firmadyne.yml build   # firmadyne 模拟
-
-# 启动整个环境
-docker-compose -f docker-compose-xxxx.yml up
-
-# 每个环境目录下都有相应的说明文件，请阅读该文件，进行漏洞/环境测试。
+# 根据每个漏洞目录的README.md进行对应的安装操作
 
 # 测试完成后，删除整个环境：
 docker-compose -f docker-compose-xxxx.yml down -v
